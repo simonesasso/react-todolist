@@ -10,19 +10,24 @@ class App extends React.Component {
       items:[],
       currentItem:{
         text: "",
-        key: ""
+        key: "",
+        color: "red",
+        decoration: "none"
       }
     };
     this.handleInput = this.handleInput.bind(this);
     this.addItem = this.addItem.bind(this);
     this.deleteItem = this.deleteItem.bind(this);
     this.setUpdate = this.setUpdate.bind(this);
+    this.setDone = this.setDone.bind(this);
   }
   handleInput(e){
     this.setState({
       currentItem:{
         text: e.target.value,
-        key: Date.now()
+        key: Date.now(),
+        color: "red",
+        decoration: "none"
       }
     })
   }
@@ -37,7 +42,10 @@ class App extends React.Component {
         items: newItems,
         currentItem:{
           text: "",
-          key: ""
+          key: "",
+          color: "red",
+          decoration: "none"
+
         }
       })
     }
@@ -51,8 +59,23 @@ class App extends React.Component {
   setUpdate(text, key){
     const items = this.state.items;
     items.map(item => {
-      if (item.key===key) {
+      if (item.key===key && item.color === "red") {
         item.text = text;
+      }
+      this.setState({
+        items: items,
+      })
+    })
+  }
+  setDone(key){
+    const items = this.state.items;
+    items.map(item => {
+      if (item.key===key && item.color === "red") {
+        item.color = "green";
+        item.decoration = "line-through";
+      }else if (item.key===key && item.color === "green") {
+        item.color = "red";
+        item.decoration = "none";
       }
       this.setState({
         items: items,
@@ -68,7 +91,7 @@ class App extends React.Component {
          <button type="submit" onSubmit={this.addItem} className="button">Add</button>
         </form>
        </div>
-        <ListItems items={this.state.items} deleteItem={this.deleteItem} setUpdate={this.setUpdate}></ListItems>
+        <ListItems items={this.state.items} deleteItem={this.deleteItem} setUpdate={this.setUpdate} setDone={this.setDone}></ListItems>
       </div>
     )
   }
