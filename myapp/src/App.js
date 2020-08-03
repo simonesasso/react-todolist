@@ -1,7 +1,7 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import ListItems from './listItems.js';
+
 
 class App extends React.Component {
   constructor(props) {
@@ -61,11 +61,13 @@ class App extends React.Component {
   }
   render() {
     return(
-      <div>
+      <div className="container">
+       <div className="header">
         <form onSubmit={this.addItem}>
-         <input type="text" value={this.state.currentItem.text} onChange={this.handleInput}/>
-         <button type="submit" onSubmit={this.addItem}>Add</button>
+         <input type="text" value={this.state.currentItem.text} onChange={this.handleInput} className="headerinput"/>
+         <button type="submit" onSubmit={this.addItem} className="button">Add</button>
         </form>
+       </div>
         <ListItems items={this.state.items} deleteItem={this.deleteItem} setUpdate={this.setUpdate}></ListItems>
       </div>
     )
